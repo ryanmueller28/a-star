@@ -23,7 +23,7 @@
  * EXPLANATION:
  * The A* algorithm is a Breadth (or Best) First Search variant of the
  * Popular Dijkstra's Shortest Path algorithm. The A* algorithm employs 
- * heuristics when testing nodes backwards from the destination, which reduces
+ * heuristics when testing nodes distance to a node and to the destination, which reduces
  * the total number of comparisons needed to find the shortest path
  * 
  * 
