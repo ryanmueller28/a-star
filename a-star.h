@@ -105,10 +105,16 @@ namespace astar
     * 
     * */
     std::vector<std::vector<int>> createGrid(int rows, int columns, int low, int high){
-        std::srand(5);
-        std::vector<std::vector<int>> vect(rows, std::vector<int> (columns, std::rand() % high + low));
+        std::srand(9);
+        std::vector<std::vector<int>> vect(rows);
+        for(int i = 0; i < rows; i++){
+          for(int j = 0; j < columns; j++){
+            vect[i].push_back(std::rand() % high + low);
+          }
+        }
         return vect;
     }
+
     
 
     /**
