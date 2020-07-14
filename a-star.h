@@ -104,6 +104,11 @@ namespace astar
     * which changes what nodes are bObstacles
     * 
     * */
+    std::vector<std::vector<int>> createGrid(int rows, int columns, int low, int high){
+        std::srand(5);
+        std::vector<std::vector<int>> vect(rows, std::vector<int> (columns, std::rand() % high + low));
+        return vect;
+    }
     
 
     /**
