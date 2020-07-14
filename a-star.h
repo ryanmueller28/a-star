@@ -5,8 +5,8 @@
  * in a data oriented way, with some Object Oriented
  * Principles included.
  * 
- * CODE by: Ryan Mueller
- * GitHub: @ryanmueller28
+ * CODE by: Ryan Mueller and Nathan Derr
+ * GitHub: @ryanmueller28 and @naderr34
  * 
  * Inspirations and attributions:
  * 
