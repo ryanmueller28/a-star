@@ -34,6 +34,8 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <limits>
+#include <cmath>
 
 namespace astar
 {
@@ -45,7 +47,9 @@ namespace astar
     struct Node
     {
         // The distance to global goal and next goal
-        float fGlobalGoal, fLocalGoal;
+        unsigned uGlobalGoalX, uGlobalGoalY, uLocalGoalX, uLocalGoalY;
+
+
 
         // have we visited the node
         bool bVisited = false; 
@@ -54,7 +58,13 @@ namespace astar
         float bObstacle = false;
 
         // The node's position in 2D space
-        int xPos, yPos; 
+        unsigned xPos, yPos; 
+
+        // Weights
+        unsigned dX = std::abs(xPos - uGlobalGoalX);
+        unsigned dY = std::abs(yPos - uGlobalGoalY);
+
+        unsigned uGlobalDist = std::sqrt(dX * dX + dY * dY);
 
         // A vector of nodes next to the node
         std::vector<Node*> neighbors;
@@ -115,6 +125,24 @@ namespace astar
      * TO DO:
      * Function to check heuristics of neighbor nodes
      * */
+
+    int getNextWeight(Node* currNode, Node* nextNode)
+    {
+        // Current node is root?
+        if (currNode->nParent == NULL)
+        {
+            currNode->xPos = 0;
+            currNode->yPos = 0;
+
+            // We don't know anything about anyone else yet!
+            // Set heuristic to infinity
+            currNode->uGlobalGoalX = std::numeric_limits<unsigned>::infinity();
+            currNode->uGlobalGoalY = std::numeric_limits<unsigned>::infinity();
+            currNode->uLocalGoalX = std::numeric_limits<unsigned>::infinity();
+            currNode->uLocalGoalY = std::numeric_limits<unsigned>::infinity();
+        }
+    }
+
 
     /**
      * TO DO:
