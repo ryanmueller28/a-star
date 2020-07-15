@@ -30,10 +30,8 @@ int main(int argc, char** argv)
     //create grid of numbers
     std::vector<std::vector<int> > vect = createGrid(rows, columns, low, high);
 
-    //add start and stop to the grid
-
-
-    //add barriers
+    //add barriers (int high, int xStart, int yStart, int xEnd, int yEnd, int barriers
+    vect = addBarriers(high, xStart, yStart, xEnd, yEnd, barriers, vect);
 
     return EXIT_SUCCESS;
 }

@@ -116,6 +116,24 @@ namespace astar
     * which changes what nodes are bObstacles
     * 
     * */
+    std::vector<std::vector<int> > addBarriers(int high, int xStart, int yStart, int xEnd, int yEnd, int barriers, std::vector<std::vector<int> > vect){
+        int barrierValue = high + 1; //this will represent the barriers. if ran into, set node.bObstacle to True
+        int x = vect[0].size();
+        int y = vect.size();
+
+        //get random locations for the barriers
+        std::srand(9);
+        for(int i = 0; i < barriers; i++){
+            int xNum = std::rand() % x + 0;
+            int yNum = std::rand() % y + 0;
+            if(xNum != xStart && yNum !=yStart){
+                if(xNum != xEnd && yNum !=yEnd){
+                    vect[xNum][yNum] = barrierValue;
+                }
+            }
+        }
+        return vect;
+    }
 
 
     
