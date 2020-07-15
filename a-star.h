@@ -95,12 +95,6 @@ namespace astar
         return false;
     }
 
-    // ripple the heuristic
-    double calculateHeuristic(int row, int col, Node* destination)
-    {
-
-    }
-
     // A bool funciton to return if a node cannot be passed through
     bool isObstacle(Node* node, int row, int col)
     {
@@ -116,7 +110,8 @@ namespace astar
     * which changes what nodes are bObstacles
     * 
     * */
-    std::vector<std::vector<int>> createGrid(int rows, int columns, int low, int high){
+    std::vector<std::vector<int>> createGrid(int rows, int columns, int low, int high)
+    {
         std::srand(5);
         std::vector<std::vector<int>> vect(rows, std::vector<int> (columns, std::rand() % high + low));
         return vect;
@@ -124,8 +119,9 @@ namespace astar
     
 
     /**
-     * TO DO:
      * Function to check heuristics of neighbor nodes
+     * @param Node* currNode, the current node checking
+     * @param Node* nextNode, the node we are looking to
      * */
 
     unsigned getNextWeight(Node* currNode, Node* nextNode)
@@ -138,11 +134,13 @@ namespace astar
 
             // We don't know anything about anyone else yet!
             // Set heuristic to infinity
-            currNode->uGlobalGoalX = std::numeric_limits<unsigned>::infinity();
-            currNode->uGlobalGoalY = std::numeric_limits<unsigned>::infinity();
+
             currNode->uLocalGoalX = std::numeric_limits<unsigned>::infinity();
             currNode->uLocalGoalY = std::numeric_limits<unsigned>::infinity();
         }
+
+        // If not root?
+
 
         // if the local goal is less than what we have already
         if (nextNode->xPos < currNode->uLocalGoalX && nextNode->yPos < currNode->uLocalGoalY)
@@ -151,10 +149,35 @@ namespace astar
             currNode->uLocalGoalX = nextNode->xPos;
 
             currNode->neighbors.push_back(nextNode);
+            nextNode->nParent = currNode;
         }
 
         return currNode->uLocalDist;
 
+    }
+
+    /**
+     * Function to get global weight to goal
+     * @param Node currNode, the current node
+     * @param Node goalNode, the end node
+     * */
+    unsigned getGlobalWeight(Node* currNode, Node* goalNode)
+    {
+        // We are at the start node. Duh
+        if (currNode->nParent == NULL)
+        {
+            currNode->xPos = 0;
+            currNode->yPos = 0;
+
+            currNode->uGlobalGoalX = std::numeric_limits<unsigned>::infinity();
+            currNode->uGlobalGoalY = std::numeric_limits<unsigned>::infinity();
+        }
+
+        // If global goal is less than what we have currently
+        // Recursive call of getLocalWeight
+        // At least, I think that's what needs to happen.
+        // look like while goalNode != isDetination
+        // Recur funciton
     }
 
 
