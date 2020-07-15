@@ -63,8 +63,11 @@ namespace astar
         // Weights
         unsigned dX = std::abs(xPos - uGlobalGoalX);
         unsigned dY = std::abs(yPos - uGlobalGoalY);
+        unsigned localX = std::abs(xPos - uLocalGoalX);
+        unsigned localY = std::abs(yPos - uLocalGoalY);
 
         unsigned uGlobalDist = std::sqrt(dX * dX + dY * dY);
+        unsigned uLocalDist = std::sqrt(localY * localY + localX + localX);
 
         // A vector of nodes next to the node
         std::vector<Node*> neighbors;
@@ -105,7 +108,6 @@ namespace astar
         {
             return true;
         }
-        
         return false;
     }
 
@@ -126,7 +128,7 @@ namespace astar
      * Function to check heuristics of neighbor nodes
      * */
 
-    int getNextWeight(Node* currNode, Node* nextNode)
+    unsigned getNextWeight(Node* currNode, Node* nextNode)
     {
         // Current node is root?
         if (currNode->nParent == NULL)
@@ -141,6 +143,18 @@ namespace astar
             currNode->uLocalGoalX = std::numeric_limits<unsigned>::infinity();
             currNode->uLocalGoalY = std::numeric_limits<unsigned>::infinity();
         }
+
+        // if the local goal is less than what we have already
+        if (nextNode->xPos < currNode->uLocalGoalX && nextNode->yPos < currNode->uLocalGoalY)
+        {
+            currNode->uLocalGoalY = nextNode->yPos;
+            currNode->uLocalGoalX = nextNode->xPos;
+
+            currNode->neighbors.push_back(nextNode);
+        }
+
+        return currNode->uLocalDist;
+
     }
 
 
